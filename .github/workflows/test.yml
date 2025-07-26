@@ -5,10 +5,41 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  test-download-script:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
       - name: Run tests
         run: python3 test.py
+
+  test-action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Schedule wush kill
+        shell: bash
+        run: |
+          nohup bash -c 'sleep 15 && pgrep -f wush && echo "wush is running" > wush.log && pkill -INT -f wush' >pkill.log 2>&1 &
+
+      - name: Run Wush Action
+        uses: ./
+        timeout-minutes: 1
+
+      - name: Check wush started
+        shell: bash
+        run: |
+          if [ -f wush.log ]; then
+            echo "wush was started"
+            exit 0
+          else
+            echo "wush was not started"
+            exit 1
+          fi
+
+      - name: Debug
+        uses: ./
+        if: failure()
+        timeout-minutes: 15
