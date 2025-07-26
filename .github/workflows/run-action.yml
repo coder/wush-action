@@ -1,0 +1,35 @@
+name: Run Action
+
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: "OS and Architecture Combination"
+        required: true
+        type: choice
+        options:
+          - Linux-X64
+          - Linux-ARM64
+          - Windows-X64
+          - Windows-ARM64
+          - macOS-X64
+          - macOS-ARM64
+
+jobs:
+  test-action:
+    runs-on: >-
+      ${{
+        github.event.inputs.variant == 'Linux-X64' && 'ubuntu-latest' ||
+        github.event.inputs.variant == 'Linux-ARM64' && 'ubuntu-24.04-arm' ||
+        github.event.inputs.variant == 'Windows-X64' && 'windows-latest' ||
+        github.event.inputs.variant == 'Windows-ARM64' && 'windows-11-arm' ||
+        github.event.inputs.variant == 'macOS-X64' && 'macos-13' ||
+        github.event.inputs.variant == 'macOS-ARM64' && 'macos-latest'
+      }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Wush Action
+        uses: ./
+        timeout-minutes: 5
