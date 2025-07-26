@@ -1,6 +1,6 @@
 # Wush Action
 
-Wush Action lets you SSH into GitHub Actions using [wush](https://github.com/coder/wush).
+SSH into GitHub Actions using [wush](https://github.com/coder/wush). Debug workflows as if they were running on your machine.
 
 ![wush-action](https://github.com/user-attachments/assets/b375e30b-bc7e-479e-b55a-69ee16abc8fd)
 
@@ -11,12 +11,11 @@ Wush Action lets you SSH into GitHub Actions using [wush](https://github.com/cod
 ```yaml
 jobs:
   wush:
-    timeout-minutes: 20
     steps:
       ...
-      
-      - uses: coder/wush-action@1.0.0
-        timeout-minutes: 20
+
+      - uses: coder/wush-action@latest
+        timeout-minutes: 30
 
       ...
 ```
@@ -33,7 +32,30 @@ jobs:
 
 <img width="1046" height="271" alt="Screenshot 2025-07-26 at 21 04 11" src="https://github.com/user-attachments/assets/554eb0d9-4caa-4a3b-80c0-193bc202f2bc" />
 
+## Supported platforms
+
+- Linux (`x86_64` and `arm64`)
+- Windows (`x86_64` and `arm64`)
+- macOS (`x86_64` and `arm64`)
+
 ## Security
 
 [Wush](https://github.com/coder/wush) establishes a Wireguard tunnel between your local machine and a GitHub Actions runner - traffic is E2E-encrypted.
 It doesn't require you to trust any 3rd party authentication or relay servers, instead using x25519 keys to authenticate connections.
+
+## Usage tips
+
+To run `coder/wush-action` regardless of whether a job succeeds or fails, consider using `${{ !cancelled }}` instead of `${{ always() }}`:
+
+```yaml
+jobs:
+  wush:
+    steps:
+      ...
+
+      - name: Run wush
+        if: ${{ !cancelled() }}
+        uses: coder/wush-action@latest
+```
+
+`always()` is immune to cancellation, so you won't be able to stop `wush` by cancelling the workflow. Instead, you'll need to SSH into GitHub Actions and kill the `wush` process manually.
