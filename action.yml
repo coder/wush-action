@@ -9,6 +9,9 @@ runs:
         set -o errexit
         set -o pipefail
         set -o nounset
+
+        TMP_DIR=$(mktemp -d)
+        cd "$TMP_DIR"
         
         ARG_OS="${{ runner.os }}" \
         ARG_ARCH="${{ runner.arch }}" \
