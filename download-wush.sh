@@ -3,6 +3,10 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
 echo "Arch: $ARG_ARCH" 
 echo "OS: $ARG_OS"
 echo "pwd: $(pwd)"
@@ -55,14 +59,21 @@ curl \
     "$DOWNLOAD_URL"
 
 echo "Verifying SHA256 checksum..."
-ACTUAL_SHA256=$(shasum -a 256 "$DOWNLOAD_ARCHIVE" | cut -d' ' -f1)
-if [ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]; then
-  echo "SHA256 checksum verification failed!" >&2
-  echo "Expected: $EXPECTED_SHA256" >&2
-  echo "Actual:   $ACTUAL_SHA256" >&2
-  exit 1
+if command_exists shasum; then
+    ACTUAL_SHA256=$(shasum -a 256 "$DOWNLOAD_ARCHIVE" | cut -d' ' -f1)
+    if [ "$ACTUAL_SHA256" != "$EXPECTED_SHA256" ]; then
+        echo "SHA256 checksum verification failed!" >&2
+        echo "Expected: $EXPECTED_SHA256" >&2
+        echo "Actual:   $ACTUAL_SHA256" >&2
+        exit 1
+    fi
+    echo "SHA256 checksum verified successfully"
+elif command_exists sha256sum; then
+    echo "$EXPECTED_SHA256 $DOWNLOAD_ARCHIVE" | sha256sum --check
+else
+    echo "No checksum verification tool found"
+    exit 1
 fi
-echo "SHA256 checksum verified successfully"
 
 if [ "$DOWNLOAD_ARCHIVE" == "wush.zip" ]; then
   unzip -o "$DOWNLOAD_ARCHIVE"
