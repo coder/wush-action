@@ -14,8 +14,22 @@ jobs:
         run: python3 test.py
 
   test-action:
-    runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        include:
+          - variant: Linux-X64
+            runs-on: ubuntu-latest
+          - variant: Linux-ARM64
+            runs-on: ubuntu-24.04-arm
+          - variant: Windows-X64
+            runs-on: windows-latest
+          - variant: Windows-ARM64
+            runs-on: windows-11-arm
+          - variant: macOS-X64
+            runs-on: macos-13
+          - variant: macOS-ARM64
+            runs-on: macos-latest
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v4
 
