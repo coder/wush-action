@@ -1,0 +1,12 @@
+name: Test README
+
+on:
+  push:
+
+jobs:
+  test-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: coder/wush-action@v1.0.0
+        timeout-minutes: 30
