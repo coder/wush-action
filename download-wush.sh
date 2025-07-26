@@ -73,5 +73,8 @@ else
   exit 1
 fi
 
-mv "$BINARY_NAME" wush
+if [ "$BINARY_NAME" != "wush" ]; then
+  mv "$BINARY_NAME" wush
+fi
+
 chmod +x wush
