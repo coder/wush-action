@@ -3,15 +3,15 @@ description: 'SSH into GitHub Actions'
 runs:
   using: 'composite'
   steps:
-    - name: Install and run wush
+    - name: Install wush
       shell: bash
       run: |
         set -o errexit
         set -o pipefail
         set -o nounset
 
-        TMP_DIR=$(mktemp -d)
-        cd "$TMP_DIR"
+        mkdir -p "$RUNNER_TEMP/wush"
+        cd "$RUNNER_TEMP/wush"
 
         SCRIPT_PATH="${{ github.action_path }}/download-wush.sh"
         chmod +x "$SCRIPT_PATH"
@@ -19,5 +19,13 @@ runs:
         ARG_OS="${{ runner.os }}" \
         ARG_ARCH="${{ runner.arch }}" \
         "$SCRIPT_PATH"
-        
+
+    - name: Run wush
+      shell: bash
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+
+        cd "$RUNNER_TEMP/wush"
         ./wush serve
