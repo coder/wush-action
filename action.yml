@@ -1,0 +1,17 @@
+name: 'Wush'
+description: 'SSH into GitHub Actions'
+runs:
+  using: 'composite'
+  steps:
+    - name: Install and run wush
+      shell: bash
+      run: |
+        set -o errexit
+        set -o pipefail
+        set -o nounset
+        
+        ARG_OS="${{ runner.os }}" \
+        ARG_ARCH="${{ runner.arch }}" \
+        "${{ github.action_path }}/download-wush.sh"
+        
+        ./wush serve
