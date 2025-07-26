@@ -34,10 +34,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Schedule wush kill
+      - name: Schedule wush kill on non-Windows runners
+        if: ${{ runner.os != 'Windows' }}
         shell: bash
         run: |
           nohup bash -c 'sleep 15 && pgrep -f wush && echo "wush is running" > wush.log && pkill -INT -f wush' >pkill.log 2>&1 &
+
+      - name: Schedule wush kill on Windows runners
+        if: ${{ runner.os == 'Windows' }}
+        shell: pwsh
+        run: |
+          Start-Job -ScriptBlock {
+            Start-Sleep 15
+            $processes = Get-Process -Name "*wush*" -ErrorAction SilentlyContinue
+            if ($processes) {
+              "wush is running" | Out-File wush.log
+              $processes | Stop-Process
+            }
+          } | Out-File pkill.log
 
       - name: Run Wush Action
         uses: ./
