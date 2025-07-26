@@ -10,8 +10,10 @@ runs:
         set -o pipefail
         set -o nounset
 
-        mkdir -p "$RUNNER_TEMP/wush"
-        cd "$RUNNER_TEMP/wush"
+        INSTALL_DIR="$RUNNER_TEMP/wush"
+        rm -rf "$INSTALL_DIR"
+        mkdir -p "$INSTALL_DIR"
+        cd "$INSTALL_DIR"
 
         SCRIPT_PATH="${{ github.action_path }}/download-wush.sh"
         chmod +x "$SCRIPT_PATH"
