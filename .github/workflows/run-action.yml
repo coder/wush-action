@@ -16,7 +16,7 @@ on:
           - macOS-ARM64
 
 jobs:
-  test-action:
+  run-action:
     runs-on: >-
       ${{
         github.event.inputs.variant == 'Linux-X64' && 'ubuntu-latest' ||

@@ -12,9 +12,12 @@ runs:
 
         TMP_DIR=$(mktemp -d)
         cd "$TMP_DIR"
+
+        SCRIPT_PATH="${{ github.action_path }}/download-wush.sh"
+        chmod +x "$SCRIPT_PATH"
         
         ARG_OS="${{ runner.os }}" \
         ARG_ARCH="${{ runner.arch }}" \
-        "${{ github.action_path }}/download-wush.sh"
+        "$SCRIPT_PATH"
         
         ./wush serve
