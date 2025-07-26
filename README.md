@@ -14,7 +14,7 @@ jobs:
     steps:
       ...
 
-      - uses: coder/wush-action@latest
+      - uses: coder/wush-action@v1.0.0
         timeout-minutes: 30
 
       ...
@@ -55,7 +55,7 @@ jobs:
 
       - name: Run wush
         if: ${{ !cancelled() }}
-        uses: coder/wush-action@latest
+        uses: coder/wush-action@v1.0.0
 ```
 
 `always()` is immune to cancellation, so you won't be able to stop `wush` by cancelling the workflow. Instead, you'll need to SSH into GitHub Actions and kill the `wush` process manually.
