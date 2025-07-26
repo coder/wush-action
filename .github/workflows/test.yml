@@ -38,7 +38,7 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
         shell: bash
         run: |
-          nohup bash -c 'sleep 15 && tasklist //FI "IMAGENAME eq wush*" //FO CSV | grep -i wush && echo "wush is running" > wush.log && wmic process where "name=\"wush.exe\"" call terminate' >pkill.log 2>&1 &
+          nohup bash -c 'sleep 15 && tasklist //FI "IMAGENAME eq wush*" //FO CSV | grep -i wush && echo "wush is running" > wush.log && wmic process where "name=\"wush\"" call terminate' >pkill.log 2>&1 &
 
       - name: Schedule wush kill on non-Windows runners
         if: ${{ runner.os != 'Windows' }}
