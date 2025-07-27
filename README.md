@@ -46,7 +46,7 @@ curl -fsSL https://github.com/coder/wush/raw/refs/heads/main/install.sh | sh
 
 ## How it works
 
-[Wush](https://github.com/coder/wush) establishes a Wireguard tunnel between your local machine and a GitHub Actions runner - traffic is E2E-encrypted.
+[Wush](https://github.com/coder/wush) establishes a WireGuard tunnel between your local machine and a GitHub Actions runner - traffic is E2E-encrypted.
 It doesn't require you to trust any 3rd party authentication or relay servers, instead using x25519 keys to authenticate connections.
 
 For more information, see [wush's README](https://github.com/coder/wush?tab=readme-ov-file#technical-details) and [source code](https://github.com/coder/wush).
