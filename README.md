@@ -20,15 +20,15 @@ jobs:
       ...
 ```
 
-2. Copy the authentication key from GitHub Actions logs:
-
-<img width="798" height="184" alt="Screenshot 2025-07-26 at 21 00 22" src="https://github.com/user-attachments/assets/f541c9f7-f778-4d6c-a9f0-d19c8154fc61" />
-
-3. Install [wush](https://github.com/coder/wush?tab=readme-ov-file#install) on your local machine:
+2. Install [wush](https://github.com/coder/wush?tab=readme-ov-file#install) on your local machine:
 
 ```bash
 curl -fsSL https://github.com/coder/wush/raw/refs/heads/main/install.sh | sh
 ```
+
+3. Copy the authentication key from GitHub Actions logs:
+
+<img width="798" height="184" alt="Screenshot 2025-07-26 at 21 00 22" src="https://github.com/user-attachments/assets/f541c9f7-f778-4d6c-a9f0-d19c8154fc61" />
 
 4. Run `wush ssh`, and paste the key.
 
