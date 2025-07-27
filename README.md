@@ -53,7 +53,7 @@ For more information, see [wush's README](https://github.com/coder/wush?tab=read
 
 ## Usage tips
 
-To run `coder/wush-action` regardless of whether a job succeeds or fails, consider using `${{ !cancelled }}` instead of `${{ always() }}`:
+To run `coder/wush-action` regardless of whether a job succeeds or fails, consider using `${{ !cancelled() }}` instead of `${{ always() }}`:
 
 ```yaml
 jobs:
