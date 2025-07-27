@@ -24,11 +24,17 @@ jobs:
 
 <img width="798" height="184" alt="Screenshot 2025-07-26 at 21 00 22" src="https://github.com/user-attachments/assets/f541c9f7-f778-4d6c-a9f0-d19c8154fc61" />
 
-3. Install [wush](https://github.com/coder/wush) on your local machine, run `wush ssh`, and paste the key.
+3. Install [wush](https://github.com/coder/wush?tab=readme-ov-file#install) on your local machine:
+
+```bash
+curl -fsSL https://github.com/coder/wush/raw/refs/heads/main/install.sh | sh
+```
+
+4. Run `wush ssh`, and paste the key.
 
 <img width="1047" height="284" alt="Screenshot 2025-07-26 at 21 02 39 1" src="https://github.com/user-attachments/assets/0e9a008d-10a2-4ad9-9220-37975021c2e6" />
 
-4. You're in!
+5. You're in!
 
 <img width="1046" height="271" alt="Screenshot 2025-07-26 at 21 04 11" src="https://github.com/user-attachments/assets/554eb0d9-4caa-4a3b-80c0-193bc202f2bc" />
 
@@ -38,10 +44,12 @@ jobs:
 - Windows (`x86_64` and `arm64`)
 - macOS (`x86_64` and `arm64`)
 
-## Security
+## How it works
 
 [Wush](https://github.com/coder/wush) establishes a Wireguard tunnel between your local machine and a GitHub Actions runner - traffic is E2E-encrypted.
 It doesn't require you to trust any 3rd party authentication or relay servers, instead using x25519 keys to authenticate connections.
+
+For more information, see [wush's README](https://github.com/coder/wush?tab=readme-ov-file#technical-details) and [source code](https://github.com/coder/wush).
 
 ## Usage tips
 
